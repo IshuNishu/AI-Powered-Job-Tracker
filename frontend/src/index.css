@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme tokens ─── */
+:root,
+[data-theme='dark'] {
+  --bg-base:       #080c14;
+  --bg-surface:    #0f1623;
+  --bg-elevated:   #161f30;
+  --bg-hover:      #1e2a3d;
+  --bg-input:      #0f1623;
+
+  --border:        rgba(255,255,255,0.07);
+  --border-focus:  rgba(99,179,237,0.6);
+
+  --text-primary:  #f0f4ff;
+  --text-secondary:#8b9ab5;
+  --text-muted:    #4a5568;
+
+  --accent:        #4f8ef7;
+  --accent-hover:  #6ba3ff;
+  --accent-glow:   rgba(79,142,247,0.25);
+
+  --col-applied:   #4f8ef7;
+  --col-phone:     #f6c543;
+  --col-interview: #a78bfa;
+  --col-offer:     #34d399;
+  --col-rejected:  #f87171;
+
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.4);
+  --shadow-modal:  0 24px 64px rgba(0,0,0,0.7);
+}
+
+[data-theme='light'] {
+  --bg-base:       #f0f4ff;
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #f7f9ff;
+  --bg-hover:      #eef2ff;
+  --bg-input:      #f7f9ff;
+
+  --border:        rgba(0,0,0,0.09);
+  --border-focus:  rgba(79,142,247,0.6);
+
+  --text-primary:  #111827;
+  --text-secondary:#4b5563;
+  --text-muted:    #9ca3af;
+
+  --accent:        #3b82f6;
+  --accent-hover:  #2563eb;
+  --accent-glow:   rgba(59,130,246,0.2);
+
+  --col-applied:   #3b82f6;
+  --col-phone:     #d97706;
+  --col-interview: #7c3aed;
+  --col-offer:     #059669;
+  --col-rejected:  #dc2626;
+
+  --shadow-card:   0 2px 12px rgba(0,0,0,0.08);
+  --shadow-modal:  0 24px 64px rgba(0,0,0,0.2);
+}
+
+/* ─── Base ─── */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ─── Keyframe animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+@keyframes cardLift {
+  from { transform: translateY(0) scale(1); box-shadow: var(--shadow-card); }
+  to   { transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+}
+@keyframes bounceIn {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ─── Utility animation classes ─── */
+.animate-fade-up    { animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-fade-in    { animation: fadeIn 0.3s ease both; }
+.animate-scale-in   { animation: scaleIn 0.3s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-slide-down { animation: slideDown 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-bounce-in  { animation: bounceIn 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+
+/* Stagger delays for list items */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.10s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.20s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+/* ─── Skeleton shimmer ─── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-elevated) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ─── Glass morphism card ─── */
+.glass {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Input base ─── */
+.input-base {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-base::placeholder { color: var(--text-muted); }
+.input-base:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ─── Noise texture overlay ─── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ─── Theme transition ─── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+/* Exceptions — don't transition transforms/opacity (breaks animations) */
+.no-theme-transition,
+[data-dnd-dragging] * {
+  transition: none !important;
+}
+
+/* ─── No scrollbar utility (for horizontal kanban on mobile) ─── */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
