@@ -30,38 +30,45 @@ export const parseJobDescription = (jd: string) =>
 
 // ATS
 export interface ATSResult {
-  score:           number;
+  score: number;
   matchedKeywords: string[];
   missingKeywords: string[];
-  suggestions:     string[];
-  summary:         string;
+  suggestions: string[];
+  summary: string;
 }
 
 export const scoreResume = async (
-  file:          File,
-  role:          string,
-  skills:        string[],
-  jdText:        string,
+  file: File,
+  role: string,
+  skills: string[],
+  jdText: string,
   applicationId: string
 ): Promise<ATSResult> => {
   const form = new FormData();
-  form.append('resume',        file);
-  form.append('role',          role);
-  form.append('skills',        JSON.stringify(skills));
-  form.append('jdText',        jdText);
+  form.append('resume', file);
+  form.append('role', role);
+  form.append('skills', JSON.stringify(skills));
+  form.append('jdText', jdText);
   form.append('applicationId', applicationId);
 
   const token = localStorage.getItem('token');
-  const res   = await fetch('/api/ats/score', {
-    method:  'POST',
-    headers: { Authorization: `Bearer ${token ?? ''}` },
-    body:    form,
-  });
+
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/ats/score`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token ?? ''}`,
+      },
+      body: form,
+    }
+  );
 
   if (!res.ok) {
     const err = await res.json() as { message?: string };
     throw new Error(err.message ?? 'ATS scoring failed');
   }
+
   return res.json() as Promise<ATSResult>;
 };
 
