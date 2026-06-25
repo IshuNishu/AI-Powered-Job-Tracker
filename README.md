@@ -148,4 +148,8 @@ MethodEndpointAuthDescriptionPOST/api/auth/register❌Register new userPOST/api/
 Automated email reminders for upcoming interviews (node-cron + Nodemailer)
 Google Calendar sync for interview dates
 Browser extension for one-click application capture from job posting pages
+<<<<<<< HEAD
 Semantic skill normalization for more accurate analytics aggregation
+=======
+Semantic skill normalization for more accurate analytics aggregation
+>>>>>>> d0a2a20 (Configure frontend API for production)
